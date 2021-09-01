@@ -19,34 +19,49 @@ std::string readDataFromFile(const std::string &filename) {
     return std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 }
 
-torch::Tensor fromStringToTensor(const std::string &data) {
-    std::vector<double> dataVector = {};
-    std::stringstream stream(data);
-    std::string tmp;
-
-    while (stream >> tmp)
-        dataVector.push_back(std::stod(tmp));
-    
-    torch::Tensor output = torch::zeros({(int)dataVector.size() / 4, 4});
-    for (int i = 0; i < dataVector.size() / 4; i++)
-    {
-        output[i][0] = dataVector[4*i    ];
-        output[i][1] = dataVector[4*i + 1];
-        output[i][2] = dataVector[4*i + 2];
-        output[i][3] = dataVector[4*i + 3];
-    }
-    
-    return output;
-}
-
 int main(int argc, const char** argv) {
     std::string filename = "/home/joao/Documentos/dev/C++/test-pytorch/data/training.dat";
     std::string trainingData = readDataFromFile(filename);
 
     auto dataset = RockImageRGBDataset(trainingData).map(torch::data::transforms::Stack<>());
+    auto dataLoader = torch::data::make_data_loader<torch::data::samplers::SequentialSampler>(
+        std::move(dataset),
+        /*batch_size = */5
+    );
 
     auto net = std::make_shared<Net>();
-    torch::optim::SGD optimizer(net->parameters(), /*lr = */0.01);
+    torch::optim::SGD optimizer(net->parameters(), /*lr = */0.05);
+
+    auto dataset_size = dataset.size().value();
+    for (int epoch = 0; epoch <= 50; epoch++)
+    {
+        for (auto &batch : *dataLoader)
+        {
+            auto data = batch.data;
+            auto target = batch.target.squeeze();
+
+            data = data.to(torch::kF32);
+            target = target.to(torch::kInt64);
+
+            optimizer.zero_grad();
+
+            auto output = net->forward(data);
+            auto loss = torch::nll_loss(output, target);
+
+            loss.backward();
+            optimizer.step();
+
+            std::cout 
+                << "Train Epoch: "
+                << epoch
+                << " Loss: "
+                << loss.item<float>()
+                << std::endl;
+            
+        }
+    }
+
+    torch::save(net, "/home/joao/Documentos/dev/C++/test-pytorch/data/model.pt");    
 
     return 0;
 }
