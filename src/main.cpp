@@ -1,5 +1,4 @@
 #include <iostream>
-#include <torch/torch.h>
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -20,10 +19,10 @@ int main(int argc, const char** argv) {
     printf("Pytorch and Libldsc integration\n");
     printf("Read file local file...\n");
 
-    std::string filename = "/home/joao/Documentos/dev/C++/test-pytorch/data/points.dat";
-    std::string data = readDataFromFile(filename);
+    std::string filename = "/home/joao/Documentos/dev/C++/test-pytorch/data/training.dat";
+    std::string trainingData = readDataFromFile(filename);
 
-    printf("Data: %s", data.c_str());
+    printf("Data: %s", trainingData.c_str());
 
     return 0;
 }
