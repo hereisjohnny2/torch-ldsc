@@ -1,16 +1,16 @@
-#include "RockDataset.hpp"
+#include "RockImageRGBDataset.hpp"
 
-torch::data::Example<> RockDataset::get(size_t index) {
+torch::data::Example<> RockImageRGBDataset::get(size_t index) {
     torch::Tensor sampleRGBInfo = data.rgbInfo[index];
     torch::Tensor sampleLabel = data.labels[index];
     return {sampleRGBInfo.clone(), sampleLabel.clone()};
 }
 
-torch::optional<size_t> RockDataset::size() const  {
+torch::optional<size_t> RockImageRGBDataset::size() const  {
     return data.labels.sizes()[0];
 };
 
-const RockData RockDataset::readDataFromString(const std::string &stringData) {
+const RockData RockImageRGBDataset::readDataFromString(const std::string &stringData) {
     RockData output;
     
     std::vector<double> dataVector = {};

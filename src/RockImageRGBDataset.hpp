@@ -6,13 +6,13 @@ struct RockData {
     torch::Tensor rgbInfo, labels;
 };
 
-class RockDataset : public torch::data::Dataset<RockDataset>
+class RockImageRGBDataset : public torch::data::Dataset<RockImageRGBDataset>
 {
 private:
     RockData data;
 
 public:
-    RockDataset(const std::string &stringData)
+    RockImageRGBDataset(const std::string &stringData)
         : data(readDataFromString(stringData)) {}
 
     torch::data::Example<> get(size_t index) override;

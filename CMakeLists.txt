@@ -11,8 +11,8 @@ enable_testing()
 
 add_executable(${PROJECT_NAME} 
     src/main.cpp
-    src/RockDataset.cpp
-    src/RockDataset.hpp
+    src/RockImageRGBDataset.cpp
+    src/RockImageRGBDataset.hpp
     src/Net.hpp
 )
 

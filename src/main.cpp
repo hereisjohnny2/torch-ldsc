@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <stdexcept>
 #include "Net.hpp"
-#include "RockDataset.hpp"
+#include "RockImageRGBDataset.hpp"
 #include <memory>
 
 std::string readDataFromFile(const std::string &filename) {
@@ -43,7 +43,7 @@ int main(int argc, const char** argv) {
     std::string filename = "/home/joao/Documentos/dev/C++/test-pytorch/data/training.dat";
     std::string trainingData = readDataFromFile(filename);
 
-    auto dataset = RockDataset(trainingData).map(torch::data::transforms::Stack<>());
+    auto dataset = RockImageRGBDataset(trainingData).map(torch::data::transforms::Stack<>());
 
     auto net = std::make_shared<Net>();
     torch::optim::SGD optimizer(net->parameters(), /*lr = */0.01);
