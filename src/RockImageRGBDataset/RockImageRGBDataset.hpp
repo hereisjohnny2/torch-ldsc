@@ -1,7 +1,9 @@
+#ifndef ROCKIMAGERGB_HPP
+#define ROCKIMAGERGB_HPP
+
 #include <torch/torch.h>
 #include <string>
 #include <vector>
-
 struct RockData {
     torch::Tensor rgbInfo, labels;
 };
@@ -21,3 +23,5 @@ public:
 private:
     const RockData readDataFromString(const std::string &stringData);
 };
+
+#endif // !ROCKIMAGERGB_HPP

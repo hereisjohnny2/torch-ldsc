@@ -15,7 +15,6 @@ add_subdirectory(src/utils)
 
 add_executable(${PROJECT_NAME} 
     src/main.cpp
-    src/Net.hpp
 )
 
 target_link_libraries(${PROJECT_NAME} 
