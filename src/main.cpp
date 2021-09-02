@@ -8,6 +8,7 @@
 #include "RockImageRGBDataset/RockImageRGBDataset.hpp"
 #include "RockImageRGBNet/RockImageRGBNet.hpp"
 #include "RockImageRGBTraining/RockImageRGBTraining.hpp"
+#include "RockImageRGBTesting/RockImageRGBTesting.hpp"
 
 int main(int argc, const char** argv) {
     double lr = 0.04;
@@ -31,13 +32,15 @@ int main(int argc, const char** argv) {
     torch::optim::SGD optimizer(net->parameters(), /*lr = */lr);
 
     RockImageRGBTraining train(net, optimizer);
+    RockImageRGBTesting test(net, optimizer);
 
     for (int epoch = 0; epoch <= 1000; epoch++)
     {
         train.execute(epoch, datasetSize, *dataLoader);
+        test.execute(epoch, datasetSize, *dataLoader);
     }
 
-    torch::save(net, "/home/joao/Documentos/dev/C++/test-pytorch/data/model.dat");    
+    torch::save(net, "/home/joao/Documentos/dev/C++/test-pytorch/data/model.pt");    
 
     return 0;
 }
