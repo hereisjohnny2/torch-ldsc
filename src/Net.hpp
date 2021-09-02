@@ -6,9 +6,9 @@ struct Net : torch::nn::Module
 
     Net() 
     {
-        fc1 = register_module("fc1", torch::nn::Linear(3,32));
-        fc2 = register_module("fc2", torch::nn::Linear(32,32));
-        fc3 = register_module("fc3", torch::nn::Linear(32,2));
+        fc1 = register_module("fc1", torch::nn::Linear(3,16));
+        fc2 = register_module("fc2", torch::nn::Linear(16,16));
+        fc3 = register_module("fc3", torch::nn::Linear(16,2));
     }
 
     torch::Tensor forward(torch::Tensor x) {
