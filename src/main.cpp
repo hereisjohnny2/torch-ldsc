@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include <stdexcept>
 #include <memory>
 
 #include "RockImageRGBDataset/RockImageRGBDataset.hpp"
