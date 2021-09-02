@@ -37,10 +37,12 @@ int main(int argc, const char** argv) {
     for (int epoch = 0; epoch <= 1000; epoch++)
     {
         train.execute(epoch, datasetSize, *dataLoader);
-        test.execute(epoch, datasetSize, *dataLoader);
+        // test.execute(epoch, datasetSize, *dataLoader);
     }
 
-    torch::save(net, "/home/joao/Documentos/dev/C++/test-pytorch/data/model.pt");    
+    torch::save(net, "/home/joao/Documentos/dev/C++/test-pytorch/data/model.pt");   
+
+    torch::load(net, "/home/joao/Documentos/dev/C++/test-pytorch/data/model.pt");
 
     return 0;
 }
