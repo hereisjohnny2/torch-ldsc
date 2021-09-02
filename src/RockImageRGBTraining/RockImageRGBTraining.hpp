@@ -8,13 +8,48 @@
 class RockImageRGBTraining
 {
 private:
-    RockImageRGBDataset dataset;
-    std::shared_ptr<RockImageRGBNet> net;
+    std::shared_ptr<RockImageRGBNet> model;
+    torch::optim::Optimizer &optimizer;
 
 public:
-    RockImageRGBTraining(RockImageRGBDataset _dataset, std::shared_ptr<RockImageRGBNet> _net) 
-        : dataset(_dataset), net(_net) {};
+    RockImageRGBTraining(
+        std::shared_ptr<RockImageRGBNet> _model,
+        torch::optim::Optimizer &_optimizer
+    ) : model(_model), optimizer(_optimizer) {};
 
-    void execute(int batch_size, int n_epoch, float lr) {}
+    template<typename DataLoader>
+    void execute(int epoch, int datasetSize, DataLoader &dataLoader) 
+    {
+        model->train();
+        size_t batchIndex = 0;
+        
+        for(auto &batch : dataLoader)
+        {
+            auto data = batch.data;
+            auto target = batch.target.squeeze();
+
+            data = data.to(torch::kF32);
+            target = target.to(torch::kInt64);
+
+            optimizer.zero_grad();
+
+            auto output = model->forward(data);
+            auto loss = torch::nll_loss(output, target);
+
+            loss.backward();
+            optimizer.step();
+
+            if (batchIndex++ % 10 == 0) {
+                std::printf(
+                    "\rEpoch: %d [%5ld/%5d] Loss: %f",
+                    epoch,
+                    batchIndex * batch.data.size(0),
+                    datasetSize,
+                    loss.template item<float>()
+                );
+            }
+            
+        }
+    }
         
 };
