@@ -4,8 +4,8 @@
 #include <stdexcept>
 #include <memory>
 
-#include "Net.hpp"
 #include "RockImageRGBDataset/RockImageRGBDataset.hpp"
+#include "RockImageRGBNet/RockImageRGBNet.hpp"
 #include "utils/utils.hpp"
 
 int main(int argc, const char** argv) {
@@ -27,7 +27,7 @@ int main(int argc, const char** argv) {
         /*batch_size = */batch_size
     );
 
-    auto net = std::make_shared<Net>();
+    auto net = std::make_shared<RockImageRGBNet>();
     torch::optim::SGD optimizer(net->parameters(), /*lr = */lr);
 
     auto dataset_size = dataset.size().value();
