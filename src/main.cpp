@@ -1,23 +1,12 @@
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <sstream>
 #include <iomanip>
 #include <stdexcept>
-#include "Net.hpp"
-#include "RockImageRGBDataset/RockImageRGBDataset.hpp"
 #include <memory>
 
-std::string readDataFromFile(const std::string &filename) {
-    std::ifstream file(filename);    
-    file.open(filename);    
-
-    if (!file.is_open()) {
-       throw std::invalid_argument("Coundn't find the file");  
-    }
-
-    return std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-}
+#include "Net.hpp"
+#include "RockImageRGBDataset/RockImageRGBDataset.hpp"
+#include "utils/utils.hpp"
 
 int main(int argc, const char** argv) {
     double lr = 0.04;
@@ -30,7 +19,7 @@ int main(int argc, const char** argv) {
 
 
     std::string filename = "/home/joao/Documentos/dev/C++/test-pytorch/data/training.dat";
-    std::string trainingData = readDataFromFile(filename);
+    std::string trainingData = utils::readDataFromFile(filename);
 
     auto dataset = RockImageRGBDataset(trainingData).map(torch::data::transforms::Stack<>());
     auto dataLoader = torch::data::make_data_loader<torch::data::samplers::SequentialSampler>(

@@ -10,13 +10,18 @@ include(CTest)
 enable_testing()
 
 add_subdirectory(src/RockImageRGBDataset)
+add_subdirectory(src/utils)
 
 add_executable(${PROJECT_NAME} 
     src/main.cpp
     src/Net.hpp
 )
 
-target_link_libraries(${PROJECT_NAME} "${TORCH_LIBRARIES}" RockImageRGBDataset)
+target_link_libraries(${PROJECT_NAME} 
+    "${TORCH_LIBRARIES}" 
+    RockImageRGBDataset
+    utils
+)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
