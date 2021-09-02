@@ -3,6 +3,8 @@
 #include <iomanip>
 #include <memory>
 
+#include <torch/optim.h>
+
 #include "RockImageRGBDataset/RockImageRGBDataset.hpp"
 #include "RockImageRGBNet/RockImageRGBNet.hpp"
 #include "utils/utils.hpp"
@@ -15,7 +17,6 @@ int main(int argc, const char** argv) {
         lr = std::atof(argv[1]);
         batch_size = std::atoi(argv[2]);
     }
-
 
     std::string filename = "/home/joao/Documentos/dev/C++/test-pytorch/data/training.dat";
     std::string trainingData = utils::readDataFromFile(filename);

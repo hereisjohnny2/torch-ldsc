@@ -1,7 +1,7 @@
 #ifndef ROCKIMAGERGB_HPP
 #define ROCKIMAGERGB_HPP
 
-#include <torch/torch.h>
+#include <torch/data.h>
 #include <string>
 #include <vector>
 struct RockData {
