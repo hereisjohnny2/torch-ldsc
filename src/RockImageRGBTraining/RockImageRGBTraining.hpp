@@ -48,8 +48,6 @@ public:
                     loss.template item<float>()
                 );
             }
-            
         }
-    }
-        
+    }    
 };

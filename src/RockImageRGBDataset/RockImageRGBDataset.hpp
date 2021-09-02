@@ -15,13 +15,14 @@ private:
 
 public:
     RockImageRGBDataset(const std::string &stringData)
-        : data(readDataFromString(stringData)) {}
+        : data(loadDataFromFile(stringData)) {}
 
     torch::data::Example<> get(size_t index) override;
     torch::optional<size_t> size() const override;
 
 private:
     const RockData readDataFromString(const std::string &stringData);
+    const RockData loadDataFromFile(const std::string &filePath);
 };
 
 #endif // !ROCKIMAGERGB_HPP

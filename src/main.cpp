@@ -8,7 +8,6 @@
 #include "RockImageRGBDataset/RockImageRGBDataset.hpp"
 #include "RockImageRGBNet/RockImageRGBNet.hpp"
 #include "RockImageRGBTraining/RockImageRGBTraining.hpp"
-#include "utils/utils.hpp"
 
 int main(int argc, const char** argv) {
     double lr = 0.04;
@@ -20,20 +19,19 @@ int main(int argc, const char** argv) {
     }
 
     std::string filename = "/home/joao/Documentos/dev/C++/test-pytorch/data/training.dat";
-    std::string trainingData = utils::readDataFromFile(filename);
 
-    auto dataset = RockImageRGBDataset(trainingData).map(torch::data::transforms::Stack<>());
+    auto dataset = RockImageRGBDataset(filename).map(torch::data::transforms::Stack<>());
     auto dataLoader = torch::data::make_data_loader<torch::data::samplers::SequentialSampler>(
         std::move(dataset),
         /*batch_size = */batch_size
     );
+    auto datasetSize = dataset.size().value();
 
     auto net = std::make_shared<RockImageRGBNet>();
     torch::optim::SGD optimizer(net->parameters(), /*lr = */lr);
 
     RockImageRGBTraining train(net, optimizer);
 
-    auto datasetSize = dataset.size().value();
     for (int epoch = 0; epoch <= 1000; epoch++)
     {
         train.execute(epoch, datasetSize, *dataLoader);
