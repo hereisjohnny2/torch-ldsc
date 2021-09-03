@@ -1,5 +1,4 @@
-#include "RockImageRGBDataset.hpp"
-#include "../utils/utils.hpp"
+#include "./RockImageRGBDataset.hpp"
 
 torch::data::Example<> RockImageRGBDataset::get(size_t index) {
     torch::Tensor sampleRGBInfo = data.rgbInfo[index];
@@ -33,10 +32,4 @@ const RockData RockImageRGBDataset::readDataFromString(const std::string &string
     }
 
     return output;
-}
-
-const RockData RockImageRGBDataset::loadDataFromFile(const std::string &filePath) 
-{
-    std::string trainingData = utils::readDataFromFile(filePath);
-    return readDataFromString(trainingData);
 }

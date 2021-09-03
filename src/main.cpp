@@ -2,45 +2,30 @@
 #include <string>
 #include <iomanip>
 #include <memory>
+#include "utils/utils.hpp"
 
 #include <torch/optim.h>
+#include "RockImageRGB/RockImageRGB.hpp"
 
-#include "RockImageRGBDataset/RockImageRGBDataset.hpp"
-#include "RockImageRGBNet/RockImageRGBNet.hpp"
-#include "RockImageRGBTraining/RockImageRGBTraining.hpp"
-#include "RockImageRGBTesting/RockImageRGBTesting.hpp"
 
 int main(int argc, const char** argv) {
     double lr = 0.04;
     int batch_size = 5;
 
-    if (argc == 3) {
-        lr = std::atof(argv[1]);
-        batch_size = std::atoi(argv[2]);
-    }
-
     std::string filename = "/home/joao/Documentos/dev/C++/test-pytorch/data/training.dat";
+    std::string data = utils::readDataFromFile(filename);
 
-    auto dataset = RockImageRGBDataset(filename).map(torch::data::transforms::Stack<>());
-    auto dataLoader = torch::data::make_data_loader<torch::data::samplers::SequentialSampler>(
-        std::move(dataset),
-        /*batch_size = */batch_size
-    );
-    auto datasetSize = dataset.size().value();
+    auto model = std::make_shared<RockImageRGBNet>();
+    torch::optim::SGD optimizer(model->parameters(), lr);
 
-    auto net = std::make_shared<RockImageRGBNet>();
-    torch::optim::SGD optimizer(net->parameters(), /*lr = */lr);
+    RockImageRGB rockImage(model);
+    // rockImage.train(data, optimizer);
 
-    RockImageRGBTraining train(net, optimizer);
+    double rgb[] = {0.165, 0.984, 0.876};
+    RGBValueDTO testRgb(rgb);
 
-    for (int epoch = 0; epoch <= 1000; epoch++)
-    {
-        train.execute(epoch, datasetSize, *dataLoader);
-    }
-
-    torch::save(net, "/home/joao/Documentos/dev/C++/test-pytorch/data/model.pt");   
-
-    torch::load(net, "/home/joao/Documentos/dev/C++/test-pytorch/data/model.pt");
+    int output = rockImage.runModel(testRgb);
+    
 
     return 0;
 }

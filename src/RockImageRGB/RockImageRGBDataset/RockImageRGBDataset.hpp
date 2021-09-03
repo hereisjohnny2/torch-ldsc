@@ -1,5 +1,4 @@
-#ifndef ROCKIMAGERGB_HPP
-#define ROCKIMAGERGB_HPP
+#pragma once
 
 #include <torch/data.h>
 #include <string>
@@ -15,14 +14,11 @@ private:
 
 public:
     RockImageRGBDataset(const std::string &stringData)
-        : data(loadDataFromFile(stringData)) {}
+        : data(readDataFromString(stringData)) {}
 
     torch::data::Example<> get(size_t index) override;
     torch::optional<size_t> size() const override;
 
 private:
     const RockData readDataFromString(const std::string &stringData);
-    const RockData loadDataFromFile(const std::string &filePath);
 };
-
-#endif // !ROCKIMAGERGB_HPP

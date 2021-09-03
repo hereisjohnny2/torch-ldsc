@@ -9,10 +9,7 @@ find_package(Torch REQUIRED)
 include(CTest)
 enable_testing()
 
-add_subdirectory(src/RockImageRGBDataset)
-add_subdirectory(src/RockImageRGBNet)
-add_subdirectory(src/RockImageRGBTraining)
-add_subdirectory(src/RockImageRGBTesting)
+add_subdirectory(src/RockImageRGB)
 add_subdirectory(src/utils)
 
 add_executable(${PROJECT_NAME} 
@@ -21,10 +18,7 @@ add_executable(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} 
     "${TORCH_LIBRARIES}" 
-    RockImageRGBDataset
-    RockImageRGBNet
-    RockImageRGBTraining
-    RockImageRGBTesting
+    RockImageRGB
     utils
 )
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)
