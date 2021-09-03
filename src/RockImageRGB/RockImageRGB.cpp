@@ -8,8 +8,7 @@ void RockImageRGB::train(
     torch::optim::Optimizer &optimizer,
     int batch_size,
     int num_epochs
-) 
-{
+) {
     auto dataset = RockImageRGBDataset(train_dataset).map(torch::data::transforms::Stack<>());
     auto dataLoader = torch::data::make_data_loader<torch::data::samplers::SequentialSampler>(
         std::move(dataset),

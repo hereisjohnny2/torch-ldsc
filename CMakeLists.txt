@@ -14,6 +14,7 @@ add_subdirectory(src/utils)
 
 add_executable(${PROJECT_NAME} 
     src/main.cpp
+    src/TorchLDSCApp.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} 
