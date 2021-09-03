@@ -2,8 +2,12 @@
 
 class TorchLDSCApp
 {
-private:
-    std::string main_menu;
 public:
     void run();
+
+private:
+    void runTraining();
+    void runModel();
+    void showMainMenu();
+    
 };
