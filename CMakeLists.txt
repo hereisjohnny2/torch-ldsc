@@ -11,6 +11,7 @@ enable_testing()
 
 add_subdirectory(src/RockImageRGB)
 add_subdirectory(src/utils)
+add_subdirectory(external/libldsc)
 
 add_executable(${PROJECT_NAME} 
     src/main.cpp
@@ -21,6 +22,7 @@ target_link_libraries(${PROJECT_NAME}
     "${TORCH_LIBRARIES}" 
     RockImageRGB
     utils
+    ldsc
 )
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)
 
