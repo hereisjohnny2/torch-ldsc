@@ -1,0 +1,3 @@
+[submodule "external/libldsc"]
+	path = external/libldsc
+	url = https://github.com/ldsc/lib_ldsc.git
