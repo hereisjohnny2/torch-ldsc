@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16.0)
 project(torch-ldsc VERSION 0.1.0)
 
 # Add the pytorch library from a local location
-list(APPEND CMAKE_PREFIX_PATH "/home/joao/Documentos/dev/C++/libtorch")
+list(APPEND CMAKE_PREFIX_PATH "/usr/local/libtorch")
 find_package(Torch REQUIRED)
 
 include(CTest)
