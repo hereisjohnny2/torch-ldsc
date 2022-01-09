@@ -18,6 +18,14 @@ add_executable(${PROJECT_NAME}
     src/TorchLDSCApp.cpp
 )
 
+target_include_directories(${PROJECT_NAME}
+    PUBLIC external/libldsc/src
+)
+
+target_link_directories(${PROJECT_NAME}
+    PRIVATE external/libldsc/src
+)
+
 target_link_libraries(${PROJECT_NAME} 
     "${TORCH_LIBRARIES}" 
     RockImageRGB
