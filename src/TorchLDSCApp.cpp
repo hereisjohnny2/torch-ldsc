@@ -57,5 +57,5 @@ void TorchLDSCApp::showMainMenu()
 
     std::cout << "\t1 - Train Model" << std::endl;
     std::cout << "\t2 - Run Model" << std::endl;
-    std::cout << "Choose on of the options: ";
+    std::cout << "Choose one of the options: ";
 }
