@@ -10,7 +10,7 @@ std::string utils::readDataFromFile(const std::string &filename) {
     file.open(filename);    
 
     if (!file.is_open()) {
-    throw std::invalid_argument("Coundn't find the file");  
+        throw std::invalid_argument("Coundn't find the file!");  
     }
 
     return std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());

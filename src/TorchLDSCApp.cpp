@@ -1,11 +1,8 @@
 #include <iostream>
-#include <string>
 #include <iomanip>
-#include <memory>
-#include "utils/utils.hpp"
 
+#include "utils/utils.hpp"
 #include "./TorchLDSCApp.hpp"
-#include "RockImageRGB/RockImageRGB.hpp"
 
 void TorchLDSCApp::run() 
 {
@@ -30,22 +27,31 @@ void TorchLDSCApp::run()
 
 void TorchLDSCApp::runTraining()
 {
-    std::string data;
+    std::string data = utils::readDataFromFile("../data/training.dat");
 
     auto model = std::make_shared<RockImageRGBNet>();
-    torch::optim::SGD optimizer(model->parameters(), 0.04);
+    torch::optim::SGD optimizer(model->parameters(), 0.001);
 
     RockImageRGB rockImage(model);
     rockImage.train(data, optimizer);
+
+    saveModel(model, "../data/model.pt");
 }
 
 void TorchLDSCApp::runModel()
 {
     auto model = std::make_shared<RockImageRGBNet>();
-    RockImageRGB rockImage(model);
+    loadModel(model, "../data/model.pt");
+
+    std::cout << "\nSaved model: \n";
+    for (auto& p : model->named_parameters()) {
+        std::cout <<  p.key() << " - " << p.value() << "\n\n";
+    }
 
     double rgb[] = {0.165, 0.984, 0.876};
     RGBValueDTO testRgb(rgb);
+
+    RockImageRGB rockImage(model);
     
     int output = rockImage.runModel(testRgb);   
     std::cout << "Output: " << output << std::endl;
@@ -58,4 +64,33 @@ void TorchLDSCApp::showMainMenu()
     std::cout << "\t1 - Train Model" << std::endl;
     std::cout << "\t2 - Run Model" << std::endl;
     std::cout << "Choose one of the options: ";
+}
+
+
+void TorchLDSCApp::saveModel(std::shared_ptr<RockImageRGBNet> model, const std::string &filename) {
+    std::ifstream file(filename);    
+    file.open(filename);    
+
+    if (!file.is_open()) {
+        std::cerr <<  "\nCoundn't find the path!\n";
+        return;
+    }
+
+    file.close();
+    
+    torch::save(model, filename);
+}
+
+void TorchLDSCApp::loadModel(std::shared_ptr<RockImageRGBNet> model, const std::string &filename) {
+    std::ifstream file(filename);    
+    file.open(filename);    
+
+    if (!file.is_open()) {
+        std::cerr <<  "\nCoundn't find the file!\n";
+        return;
+    }
+
+    file.close();
+    
+    torch::load(model, filename);
 }
