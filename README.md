@@ -50,4 +50,29 @@ So far, you can run the executable with the `learning rate` and the `batch size`
 $ ./torch-ldsc 0.04 5
 ```
 
-## Tests
+## To Do List
+
+- [X] Compile the application with Torch
+- [X] Compile the application with LDSC
+- [] Work with Torch NN models
+    - [X] Create a new model
+    - [X] Train with Eneida's project data
+    - [] Save the model in storage to re-use
+    - [] Load model from storage
+    - [] Develop routines to work with dataset spliting
+- [] Integrate both LIBs
+    - [X] Load an image from storage
+    - [] Convert image data into torch tensor
+    - [] Use trained model to perform image binarizarion
+    - [] Save image in storage
+- [] Gather more pixel data from PETROBRAS datasets
+    [X] Use already implemented modifications in [LVP](https://github.com/hereisjohnny2/lvp) to collect pixels RGB/Pore data
+    - [] Save information in text dataset
+    - [] Split dataset in training and testing
+    - [] Training NN with new dataset
+    - [] Apply trained model on collected images
+- [] Develop a CMD user interface to test the application with different images
+- [] (*Optional*) Write test
+- [] (*Optional*) Develop an user interface for NN model ajustments in QT
+- [] (*Optional*) Export LIB integration to use as an WebAssembly app
+    - If it works fine might be easier to implement a good UI
