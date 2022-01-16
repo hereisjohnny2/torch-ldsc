@@ -43,11 +43,6 @@ void TorchLDSCApp::runModel()
     auto model = std::make_shared<RockImageRGBNet>();
     loadModel(model, "../data/model.pt");
 
-    std::cout << "\nSaved model: \n";
-    for (auto& p : model->named_parameters()) {
-        std::cout <<  p.key() << " - " << p.value() << "\n\n";
-    }
-
     double rgb[] = {0.165, 0.984, 0.876};
     RGBValueDTO testRgb(rgb);
 
