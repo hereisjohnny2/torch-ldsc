@@ -9,11 +9,15 @@ void RockImageRGB::train(
     int batch_size,
     int num_epochs
 ) {
-    auto dataset = RockImageRGBDataset(train_dataset).map(torch::data::transforms::Stack<>());
+    auto dataset = RockImageRGBDataset(train_dataset)
+        .map(torch::data::transforms::Normalize<>(0.5, 0.5))
+        .map(torch::data::transforms::Stack<>());
+
     auto dataLoader = torch::data::make_data_loader<torch::data::samplers::SequentialSampler>(
         std::move(dataset),
         batch_size
     );
+
     auto datasetSize = dataset.size().value();
 
     RockImageRGBTraining train(model, optimizer);
