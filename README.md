@@ -22,32 +22,32 @@ list(APPEND CMAKE_PREFIX_PATH "/your/torch/location/libtorch")
 This project also demands CMake building system to compile the source code. So after clone this repository create a "build" folder in the project root:
 
 ```bash
-$ mkdir build
+mkdir build
 ```
 
 Then run the cmake build command to create the file needed:
 
 ```bash
-$ cmake -B build -S .
+cmake -B build -S .
 ```
 
 Next, go inside the build folder and run the Makefile created by CMake:
 
 ```bash
-$ cd build
-$ make
+cd build
+make
 ```
 
 Finally, run the executable named `torch-ldsc`.
 
 ```bash
-$ ./torch-ldsc
+./torch-ldsc
 ```
 
 So far, you can run the executable with the `learning rate` and the `batch size` as parameters. This can make easier the training process:
 
 ```bash
-$ ./torch-ldsc 0.04 5
+./torch-ldsc 0.04 5
 ```
 
 ## To Do List
