@@ -59,11 +59,11 @@ $ ./torch-ldsc 0.04 5
     - [X] Train with Eneida's project data
     - [ ] Save the model in storage to re-use (16/01/22)
     - [ ] Load model from storage (16/01/22)
-    - [ ] Develop routines to work with dataset spliting (16/01/22)
+    - [ ] Develop routines to work with dataset splitting (16/01/22)
 - [ ] Integrate both LIBs
     - [X] Load an image from storage
     - [ ] Convert image data into torch tensor (17/01/22)
-    - [ ] Use trained model to perform image binarizarion (17/01/22)
+    - [ ] Use trained model to perform image segmentation (17/01/22)
     - [ ] Save image in storage (17/01/22)
 - [ ] Gather more pixel data from PETROBRAS datasets
     [X] Use already implemented modifications in [LVP](https://github.com/hereisjohnny2/lvp) to collect pixels RGB/Pore data
@@ -73,9 +73,9 @@ $ ./torch-ldsc 0.04 5
     - [ ] Apply trained model on collected images
 - [ ] Develop a CMD user interface to test the application with different images
 - [ ] (*Optional*) Write test
-- [ ] (*Optional*) Develop an user interface for NN model ajustments in QT
+- [ ] (*Optional*) Develop an user interface for NN model adjustments in QT
     - [ ] Create an interface to load images from storage
-    - [ ] Create an interface to performe basic image operations
+    - [ ] Create an interface to perform basic image operations
     - [ ] Develop an NN Graphical builder
     - [ ] Perform image segmentation
 - [ ] (*Optional*) Export LIB integration to use as an WebAssembly app
