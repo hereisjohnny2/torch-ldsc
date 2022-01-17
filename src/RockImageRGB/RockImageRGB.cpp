@@ -29,10 +29,7 @@ void RockImageRGB::train(
 }
 
 
-int RockImageRGB::runModel(const RGBValueDTO &rgbValue) 
-{ 
-    auto output = model->forward(rgbValue.rgb);
-    auto prediction = output.argmax(1).abs();
-
-    return prediction.template item<int>();
+at::Tensor RockImageRGB::applyModel(at::Tensor rgb) {
+    auto out = model->forward(rgb);
+    return out.argmax(1).abs();
 }

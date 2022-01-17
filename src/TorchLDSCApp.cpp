@@ -1,8 +1,11 @@
 #include <iostream>
 #include <iomanip>
+#include <vector>
 
 #include "utils/utils.hpp"
 #include "./TorchLDSCApp.hpp"
+
+#include <MetNum/Matriz/CImagem.h>
 
 void TorchLDSCApp::run() 
 {
@@ -43,13 +46,40 @@ void TorchLDSCApp::runModel()
     auto model = std::make_shared<RockImageRGBNet>();
     loadModel(model, "../data/model.pt");
 
-    double rgb[] = {0.165, 0.984, 0.876};
-    RGBValueDTO testRgb(rgb);
+    CImagem imageFromStorage("../data/Berea500.pgm");
+    EImageType imageType = imageFromStorage.GetFormato();
 
+    int nx = imageFromStorage.NX();
+    int ny = imageFromStorage.NY();
+    std:vector<int> linearizedData2D;
     RockImageRGB rockImage(model);
+
+    auto tensor = torch::zeros({nx*ny, 1});
+
+    int pos = 0;
+    for (auto &&row : imageFromStorage.Data2D())
+        for (auto &&value : row) {
+            tensor[pos] = rockImage.applyModel(torch::from_blob(std::vector<int>({value, value, value}).data(), {1, 3}, torch::kFloat));
+            pos++;
+        }
+
+    tensor = tensor.reshape({nx, ny});
+
+    std::shared_ptr<CImagem> output = std::make_shared<CImagem>(nx, ny);
+
+    for (int i = 0; i < tensor.sizes()[0]; i++)
+    {
+        for (int j = 0; j < tensor.sizes()[1]; j++)
+        {   
+            output->data2D[i][j] = tensor[i][j].item<int>();
+        }
+    }
     
-    int output = rockImage.runModel(testRgb);   
-    std::cout << "Output: " << output << std::endl;
+    
+    output->SetFormato(EImageType::P1_X_Y_ASCII);
+
+    std::ofstream outFile("../data/out", std::ofstream::out);
+    output->SalvaDados(outFile); 
 }
 
 void TorchLDSCApp::showMainMenu()

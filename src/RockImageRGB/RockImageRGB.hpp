@@ -33,7 +33,8 @@ public:
         int num_epochs = 1000
     );
     void test(std::string test_dataset) {}
-    int runModel(const RGBValueDTO &rgbValue);
+
+    at::Tensor applyModel(at::Tensor rgb);
 };
 
 
